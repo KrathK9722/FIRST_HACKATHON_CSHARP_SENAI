@@ -26,8 +26,24 @@ namespace CSHARP_APLICATIVO_WPF
 public static class Global
 {
 
-    public class 
-    {
+    public static string connectionString = "Server=localhost;Database=store;Uid=root;Pwd=;";
 
+    // Conexão fica guardada aberta na memória do app
+    public static MySqlConnection Connection { get; set; }
+
+    public static void Open_database()
+    {
+        try
+        {
+            if (Connection == null || Connection.State != System.Data.ConnectionState.Open)
+            {
+                Connection = new MySqlConnection(connectionString);
+                Connection.Open();
+            }
+        }
+        catch (System.Exception ex)
+        {
+            System.Windows.MessageBox.Show("Erro ao conectar: " + ex.Message);
+        }
     }
 }
