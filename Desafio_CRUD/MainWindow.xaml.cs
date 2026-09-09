@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using MySql.Data.MySqlClient;
+using System.Data;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +19,10 @@ namespace Desafio_CRUD
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public static string connectionString = "Server=localhost;Database=store;Uid=root;Pwd=;";
+        public static MySqlConnection Connection { get; set; }
+
         bool menu_opened = false;
 
         public MainWindow()
@@ -32,11 +38,12 @@ namespace Desafio_CRUD
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Collapsed;
             landing_page.Visibility = Visibility.Visible;
+            
         }
 
 
 
-        // CÓDIGO DE ABERTURA DO MENU LATERAL
+        // OPENING SIDE MENU
         private void menu_button_click(object sender, RoutedEventArgs e)
         {
             GridLengthConverter converter = new GridLengthConverter();
@@ -55,14 +62,57 @@ namespace Desafio_CRUD
             }
         }
 
-        // SAIR DO SISTEMA
+        // LOAD DATABASE
+
+        public void viewDataBase()
+        {
+            if (GlobalFunctions.Verify_database() == true)
+            {
+                menu_button_register_first_house.Visibility = Visibility.Hidden;
+                try
+                {
+                    using (MySqlConnection conn = new MySqlConnection(connectionString))
+                    {
+
+                        conn.Open();
+
+                        string sql = @"SELECT usuario,id,email FROM usuarios";
+
+                        using MySqlCommand cmd =
+                            new MySqlCommand(sql, conn);
+
+                        using MySqlDataAdapter adapter =
+                            new MySqlDataAdapter(cmd);
+
+                        DataTable tabela = new DataTable();
+
+                        adapter.Fill(tabela);
+
+                        landing_page_data.ItemsSource =
+                            tabela.DefaultView;
+
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                menu_button_register_first_house.Visibility = Visibility.Visible;
+            }
+        }
+
+        // EXIT BUTTON
 
         private void exit_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        // ABRIR LANDING PAGE
+        // OPEN LANDING SCREEN
         private void start_click(object sender, RoutedEventArgs e)
         {
             register_screen.Visibility = Visibility.Collapsed;
@@ -71,7 +121,7 @@ namespace Desafio_CRUD
             landing_page.Visibility = Visibility.Visible;
         }
 
-        // ABRIR JANELA DE REGISTRO DE RESIDENCIA
+        // OPEN HOUSE REGISTER SCREEN
         private void register_click(object sender, RoutedEventArgs e)
         {
             register_screen.Visibility = Visibility.Visible;
@@ -80,7 +130,7 @@ namespace Desafio_CRUD
             landing_page.Visibility = Visibility.Collapsed;
         }
 
-        // ABRIR JANELA DE EDIÇÃO DE CASAS
+        // OPEN HOUSE EDIT SCREEN
         private void edit_click(object sender, RoutedEventArgs e)
         {
             register_screen.Visibility = Visibility.Collapsed;
@@ -89,7 +139,7 @@ namespace Desafio_CRUD
             landing_page.Visibility = Visibility.Collapsed;
         }
 
-        // ABRIR JANELA DE REMOÇÃO DE CASAS
+        // OPEN HOUSE REMOVE SCREEN
         private void remove_click(object sender, RoutedEventArgs e)
         {
             register_screen.Visibility = Visibility.Collapsed;

@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/Itens de Solução/">
-    <File Path="global.cs" />
-  </Folder>
+  <Folder Name="/Itens de Solução/" />
   <Project Path="Desafio_CRUD/Desafio_CRUD.csproj" />
 </Solution>

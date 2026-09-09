@@ -41,8 +41,17 @@ namespace Desafio_CRUD
 
         public static bool Verify_database()
         {
-            string query = "SELECT COUNT(*) FROM houses"
+            string query = "SELECT COUNT(*) FROM houses";
             using var viewData = new MySqlCommand(query, Connection);
+
+            if (Convert.ToInt64(viewData.ExecuteScalar()) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
