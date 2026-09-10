@@ -76,7 +76,7 @@ namespace Desafio_CRUD
 
                         conn.Open();
 
-                        string sql = @"SELECT usuario,id,email FROM usuarios";
+                        string sql = @"SELECT id,location, area,price,bedrooms,bathrooms,furnished, floors FROM houses";
 
                         using MySqlCommand cmd =
                             new MySqlCommand(sql, conn);

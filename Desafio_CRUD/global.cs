@@ -45,7 +45,7 @@ namespace Desafio_CRUD
             string query = "SELECT COUNT(*) FROM houses";
             using var viewData = new MySqlCommand(query, Connection);
 
-            if (Convert.ToInt64(viewData.ExecuteScalar()) > 0)
+            if (Convert.ToInt32(viewData.ExecuteScalar()) > 0)
             {
                 return true;
             }
