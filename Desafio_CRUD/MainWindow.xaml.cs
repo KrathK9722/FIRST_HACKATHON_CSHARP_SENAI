@@ -193,8 +193,19 @@ namespace Desafio_CRUD
             {
                 error += 1;
             }
-            if error 
-            GlobalFunctions.SaveHouse();
+            if (error <= 0)
+            {
+                bool hasFurniture = false;
+                if (has_furniture.IsChecked == true)
+                {
+                    hasFurniture |= true;
+                }
+                GlobalFunctions.SaveHouse(register_location.Text, Convert.ToInt32(area_slide.Value), price_slide.Value,hasFurniture, register_bedroom.SelectedIndex, register_bathroom.SelectedIndex, register_floor.SelectedIndex);
+            }
+            else
+            {
+                MessageBox.Show("Preencha todos os dados");
+            }
         }
 
         // OPEN HOUSE EDIT SCREEN

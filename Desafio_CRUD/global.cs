@@ -41,6 +41,7 @@ namespace Desafio_CRUD
 
         public static bool Verify_database()
         {
+            Open_database();
             string query = "SELECT COUNT(*) FROM houses";
             using var viewData = new MySqlCommand(query, Connection);
 
@@ -56,8 +57,8 @@ namespace Desafio_CRUD
 
         public static void SaveHouse(string location, int area, double price, bool furniture, int bedrooms, int bathrooms, int floors )
         {
-
-            string query = "INSERT INTO houses (location, area, price, floors, bedrooms, bathrooms, furnished) VALUES (@location, @area, @price, @floors, @bathrooms, @badrooms, @furniture)";
+            Open_database();
+            string query = "INSERT INTO houses (location, area, price, floors, bedrooms, bathrooms, furnished) VALUES (@location, @area, @price, @floors, @bathrooms, @bedrooms, @furniture)";
             try
             {
                 using (MySqlCommand command = new MySqlCommand(query, Connection))
@@ -69,6 +70,8 @@ namespace Desafio_CRUD
                     command.Parameters.AddWithValue("@bedrooms", bedrooms);
                     command.Parameters.AddWithValue("@bathrooms", bathrooms);
                     command.Parameters.AddWithValue("@furniture", furniture);
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Casa Registrada");
                 }
             }
             catch (System.Exception ex)

@@ -112,7 +112,7 @@
                 TickPlacement="BottomRight" 
                 IsSnapToTickEnabled="True" ValueChanged="Slider_AreaChanged"/>
             <Label x:Name="area_register" Content="Area:" HorizontalAlignment="Left" Margin="311,313,0,0" VerticalAlignment="Top"/>
-            <Button Content="Criar Registro" HorizontalAlignment="Center" Margin="0,397,0,0" VerticalAlignment="Top" Click="confirm_click"/>
+            <Button x:Name="confirm_click" Content="Criar Registro" HorizontalAlignment="Center" Margin="0,397,0,0" VerticalAlignment="Top" Click="confirm_Click"/>
         </Grid>
 
         <!-- EDIT -->
