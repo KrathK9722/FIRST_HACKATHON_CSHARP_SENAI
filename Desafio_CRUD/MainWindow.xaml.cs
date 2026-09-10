@@ -33,7 +33,7 @@ namespace Desafio_CRUD
 
         private void setScreen()
         {
-
+            viewDataBase();
             register_screen.Visibility = Visibility.Collapsed;
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Collapsed;
@@ -66,7 +66,8 @@ namespace Desafio_CRUD
 
         public void viewDataBase()
         {
-            if (GlobalFunctions.Verify_database() == true)
+            bool hasHouses = GlobalFunctions.Verify_database();
+            if (hasHouses == true)
             {
                 menu_button_register_first_house.Visibility = Visibility.Hidden;
                 try
@@ -115,6 +116,7 @@ namespace Desafio_CRUD
         // OPEN LANDING SCREEN
         private void start_click(object sender, RoutedEventArgs e)
         {
+            viewDataBase();
             register_screen.Visibility = Visibility.Collapsed;
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Collapsed;
@@ -201,6 +203,14 @@ namespace Desafio_CRUD
                     hasFurniture |= true;
                 }
                 GlobalFunctions.SaveHouse(register_location.Text, Convert.ToInt32(area_slide.Value), price_slide.Value,hasFurniture, register_bedroom.SelectedIndex, register_bathroom.SelectedIndex, register_floor.SelectedIndex);
+                area_slide.Value = 10;
+                price_slide.Value = 100000;
+                register_location.Clear();
+                register_bathroom.SelectedIndex = -1;
+                register_bedroom.SelectedIndex = -1;
+                register_floor.SelectedIndex = -1;
+                has_furniture.IsChecked = false;
+
             }
             else
             {
