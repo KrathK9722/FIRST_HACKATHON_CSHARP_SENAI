@@ -53,5 +53,28 @@ namespace Desafio_CRUD
                 return false;
             }
         }
+
+        public static void SaveHouse(string location, int area, double price, bool furniture, int bedrooms, int bathrooms, int floors )
+        {
+
+            string query = "INSERT INTO houses (location, area, price, floors, bedrooms, bathrooms, furnished) VALUES (@location, @area, @price, @floors, @bathrooms, @badrooms, @furniture)";
+            try
+            {
+                using (MySqlCommand command = new MySqlCommand(query, Connection))
+                {
+                    command.Parameters.AddWithValue("@location", location);
+                    command.Parameters.AddWithValue("@area", area);
+                    command.Parameters.AddWithValue("@price", price);
+                    command.Parameters.AddWithValue("@floors", floors);
+                    command.Parameters.AddWithValue("@bedrooms", bedrooms);
+                    command.Parameters.AddWithValue("@bathrooms", bathrooms);
+                    command.Parameters.AddWithValue("@furniture", furniture);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Erro no banco");
+            }
+        }
     }
 }

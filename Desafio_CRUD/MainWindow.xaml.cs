@@ -121,6 +121,10 @@ namespace Desafio_CRUD
             landing_page.Visibility = Visibility.Visible;
         }
 
+        // ==========================
+        //  REGISTER HOUSE
+        // ==========================
+
         // OPEN HOUSE REGISTER SCREEN
         private void register_click(object sender, RoutedEventArgs e)
         {
@@ -128,6 +132,69 @@ namespace Desafio_CRUD
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Collapsed;
             landing_page.Visibility = Visibility.Collapsed;
+        }
+
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = register_location.Text;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+
+        public void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Slider_PriceChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (price_register != null)
+            {
+                double value = e.NewValue;
+
+                price_register.Content = $"Price: R${value:F0}";
+            }
+        }
+        private void Slider_AreaChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (area_register != null)
+            {
+                double value = e.NewValue;
+
+                area_register.Content = $"Area: {value:F0}m²";
+            }
+        }
+        private void confirm_Click(object sender, RoutedEventArgs e)
+        {
+            int error = 0;
+            if (register_location.Text == null)
+            {
+                error += 1;
+            }
+            if (price_slide.Value < 100000)
+            {
+                error += 1;
+            }
+            if (area_slide.Value < 10)
+            {
+                error += 1;
+            }
+            if ( register_bathroom.SelectedIndex < 0)
+            {
+                error += 1;
+            }
+            if (register_bedroom.SelectedIndex < 0)
+            {
+                error += 1;
+            }
+            if (register_floor.SelectedIndex < 0)
+            {
+                error += 1;
+            }
+            if error 
+            GlobalFunctions.SaveHouse();
         }
 
         // OPEN HOUSE EDIT SCREEN
