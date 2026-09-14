@@ -1,164 +1,805 @@
-﻿<Window x:Class="Desafio_CRUD.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Desafio_CRUD"
-        mc:Ignorable="d"
-        Title="StartScreen" Height="450" Width="800">
-    <Grid>
-        <!-- Definição das duas colunas principais -->
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Desafio_CRUD"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    x:Class="Desafio_CRUD.MainWindow"
+    mc:Ignorable="d"
+    Title="StartScreen"
+    Width="1000"
+    Height="650"
+    MinWidth="850"
+    MinHeight="550"
+    Background="#F7F7F7"
+    FontFamily="Segoe UI">
+
+    <Window.Resources>
+
+        <!-- CORES -->
+
+        <SolidColorBrush x:Key="WindowBackground" Color="#F7F7F7"/>
+        <SolidColorBrush x:Key="SidebarBackground" Color="#F2F2F2"/>
+        <SolidColorBrush x:Key="SidebarHover" Color="#E8E8E8"/>
+        <SolidColorBrush x:Key="SidebarSelected" Color="#DCEBFF"/>
+        <SolidColorBrush x:Key="PrimaryBlue" Color="#0067C0"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#1A1A1A"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#616161"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#E1E1E1"/>
+
+
+        <!-- SOMBRA -->
+
+        <DropShadowEffect
+            x:Key="SoftShadow"
+            BlurRadius="18"
+            ShadowDepth="2"
+            Direction="270"
+            Opacity="0.12"
+            Color="#000000"/>
+
+
+        <!-- BOTÃO DO MENU -->
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Margin" Value="8,3"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border
+                            x:Name="ButtonBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="{StaticResource SidebarHover}"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="#D6D6D6"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- BOTÃO PRINCIPAL -->
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+
+            <Setter Property="Background" Value="{StaticResource PrimaryBlue}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border
+                            x:Name="ButtonBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="7"
+                            Padding="{TemplateBinding Padding}">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="#1976D2"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+
+                                <Setter
+                                    TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="#005A9E"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+
+        <!-- TEXTBOX -->
+
+        <Style TargetType="TextBox">
+
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#D1D1D1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        </Style>
+
+
+        <!-- COMBOBOX -->
+
+        <Style TargetType="ComboBox">
+
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#D1D1D1"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+        </Style>
+
+
+        <!-- LABEL -->
+
+        <Style TargetType="Label">
+
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="FontSize" Value="13"/>
+
+        </Style>
+
+    </Window.Resources>
+
+
+    <!-- LAYOUT PRINCIPAL -->
+
+    <Grid Background="{StaticResource WindowBackground}">
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="menu_column" Width="61"/>
-            <ColumnDefinition/>
+
+            <!-- MENU -->
+
+            <ColumnDefinition Width="210"/>
+
+            <!-- CONTEÚDO -->
+
+            <ColumnDefinition Width="*"/>
+
         </Grid.ColumnDefinitions>
 
-        <!-- COLUNA 0: Menu Lateral -->
-        <StackPanel x:Name="side_menu" Grid.Column="0" Background="#FFC5C5C5">
 
-            <Grid Height="60">
-                <Image Source="/house-removebg-preview.png" Stretch="Uniform" Width="24" Height="24"
-                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" IsHitTestVisible="False"/>
-                <Button x:Name="menu_button_start" Content="Inicio" Width="58" Height="30"
-                        VerticalAlignment="Bottom" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                        Click="start_click"/>
+        <!-- ================================================= -->
+        <!-- SIDEBAR -->
+        <!-- ================================================= -->
+
+        <Border
+            Grid.Column="0"
+            Background="{StaticResource SidebarBackground}"
+            BorderBrush="{StaticResource BorderColor}"
+            BorderThickness="0,0,1,0">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="80"/>
+
+                    <RowDefinition Height="*"/>
+
+                    <RowDefinition Height="65"/>
+
+                </Grid.RowDefinitions>
+
+
+                <!-- LOGO -->
+
+                <StackPanel
+                    Grid.Row="0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    Margin="18,0">
+
+                    <Border
+                        Width="40"
+                        Height="40"
+                        Background="#0067C0"
+                        CornerRadius="10">
+
+                        <TextBlock
+                            Text="A"
+                            Foreground="White"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+
+                    </Border>
+
+                    <StackPanel
+                        Margin="12,0,0,0"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            Text="ARFE"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="#1A1A1A"/>
+
+                        <TextBlock
+                            Text="Imobiliária"
+                            FontSize="11"
+                            Foreground="#777777"/>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+
+                <!-- MENU -->
+
+                <StackPanel
+                    x:Name="side_menu"
+                    Grid.Row="1"
+                    Margin="4,12,4,0">
+
+
+                    <!-- INÍCIO -->
+
+                    <Button
+                        x:Name="menu_button_start"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="start_click">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                Text="🏠"
+                                FontSize="21"
+                                Width="35"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                Text="Início"
+                                VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+
+                    <!-- REGISTRAR -->
+
+                    <Button
+                        x:Name="menu_button_register"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="register_click">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                Text="➕"
+                                FontSize="21"
+                                Width="35"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                Text="Registrar casas"
+                                VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+
+                    <!-- EDITAR -->
+
+                    <Button
+                        x:Name="menu_button_edit"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="edit_click">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                Text="✏️"
+                                FontSize="19"
+                                Width="35"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                Text="Editar casas"
+                                VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+
+                    <!-- REMOVER -->
+
+                    <Button
+                        x:Name="menu_button_remove"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="remove_click">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                Text="🗑️"
+                                FontSize="19"
+                                Width="35"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                Text="Remover casas"
+                                VerticalAlignment="Center"/>
+
+                        </StackPanel>
+
+                    </Button>
+
+
+                </StackPanel>
+
+
+                <!-- SAIR -->
+
+                <Border
+                    Grid.Row="2"
+                    BorderBrush="#DDDDDD"
+                    BorderThickness="0,1,0,0">
+
+                    <Button
+                        x:Name="menu_button_exit"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="exit_click"
+                        Margin="8">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                Text="❌"
+                                FontSize="19"
+                                Width="35"
+                                VerticalAlignment="Center"/>
+
+                            <TextBlock
+                                VerticalAlignment="Center" FontSize="18"><Run Text="Sair"/><Run Language="pt-br" Text=" do Sistema"/></TextBlock>
+
+                        </StackPanel>
+
+                    </Button>
+
+                </Border>
+
             </Grid>
 
-            <Grid Height="80
-                  ">
-                <Image Source="/perfil-removebg-preview.png" Stretch="Uniform" Width="24" Height="24"
-                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" IsHitTestVisible="False"/>
-                <Button x:Name="menu_button_register" Content="Registrar &#xD;&#xA;Casas" Width="62" Height="40"
-                        VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                        Click="register_click" Margin="0,30,0,0" HorizontalAlignment="Center"/>
+        </Border>
+
+
+        <!-- ================================================= -->
+        <!-- CONTEÚDO -->
+        <!-- ================================================= -->
+
+        <Grid
+            Grid.Column="1"
+            Background="{StaticResource WindowBackground}">
+
+
+            <!-- ============================================= -->
+            <!-- REGISTER -->
+            <!-- ============================================= -->
+
+            <Grid
+                x:Name="register_screen"
+                Visibility="Collapsed">
+
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto">
+
+                    <StackPanel
+                        Width="500"
+                        HorizontalAlignment="Center"
+                        Margin="40">
+
+                        <TextBlock
+                            Text="Registrar casa"
+                            FontSize="28"
+                            FontWeight="SemiBold"
+                            Foreground="#1A1A1A"
+                            Margin="0,10,0,5"/>
+
+                        <TextBlock
+                            Text="Cadastre uma nova propriedade no sistema."
+                            FontSize="14"
+                            Foreground="#707070"
+                            Margin="0,0,0,30"/>
+
+
+                        <!-- CARD -->
+
+                        <Border
+                            Background="White"
+                            CornerRadius="12"
+                            Padding="30"
+                            Effect="{StaticResource SoftShadow}">
+
+                            <StackPanel>
+
+
+                                <TextBlock
+                                    Text="Localização"
+                                    FontWeight="SemiBold"
+                                    Margin="0,0,0,7"/>
+
+                                <TextBox
+                                    x:Name="register_location"
+                                    TextChanged="TextBox_TextChanged"
+                                    Margin="0,0,0,18"/>
+
+
+                                <TextBlock
+                                    Text="Andares"
+                                    FontWeight="SemiBold"
+                                    Margin="0,0,0,7"/>
+
+                                <ComboBox
+                                    x:Name="register_floor"
+                                    SelectedIndex="-1"
+                                    SelectionChanged="ComboBox_SelectionChanged"
+                                    Margin="0,0,0,18">
+
+                                    <ComboBoxItem Content="1 andar"/>
+                                    <ComboBoxItem Content="2 andares"/>
+                                    <ComboBoxItem Content="3 andares"/>
+                                    <ComboBoxItem Content="4 andares"/>
+                                    <ComboBoxItem Content="5 andares ou mais"/>
+
+                                </ComboBox>
+
+
+                                <TextBlock
+                                    Text="Quantidade de quartos"
+                                    FontWeight="SemiBold"
+                                    Margin="0,0,0,7"/>
+
+                                <ComboBox
+                                    x:Name="register_bedroom"
+                                    SelectedIndex="-1"
+                                    SelectionChanged="ComboBox_SelectionChanged"
+                                    Margin="0,0,0,18">
+
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                    <ComboBoxItem Content="6"/>
+                                    <ComboBoxItem Content="7 ou mais"/>
+
+                                </ComboBox>
+
+
+                                <TextBlock
+                                    Text="Quantidade de banheiros"
+                                    FontWeight="SemiBold"
+                                    Margin="0,0,0,7"/>
+
+                                <ComboBox
+                                    x:Name="register_bathroom"
+                                    SelectedIndex="-1"
+                                    SelectionChanged="ComboBox_SelectionChanged"
+                                    Margin="0,0,0,22">
+
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5 ou mais"/>
+
+                                </ComboBox>
+
+
+                                <!-- PREÇO -->
+
+                                <TextBlock
+                                    x:Name="price_register"
+                                    Text="Preço"
+                                    FontWeight="SemiBold"/>
+
+                                <Slider
+                                    x:Name="price_slide"
+                                    Minimum="100000"
+                                    Maximum="10000000"
+                                    Value="3"
+                                    TickFrequency="10000"
+                                    TickPlacement="BottomRight"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="Slider_PriceChanged"
+                                    Margin="0,5,0,18"/>
+
+
+                                <!-- ÁREA -->
+
+                                <TextBlock
+                                    x:Name="area_register"
+                                    Text="Área"
+                                    FontWeight="SemiBold"/>
+
+                                <Slider
+                                    x:Name="area_slide"
+                                    Minimum="10"
+                                    Maximum="1000"
+                                    Value="10"
+                                    TickFrequency="5"
+                                    TickPlacement="BottomRight"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="Slider_AreaChanged"
+                                    Margin="0,5,0,18"/>
+
+
+                                <CheckBox
+                                    x:Name="has_furniture"
+                                    Content="Com mobília"
+                                    Checked="CheckBox_Checked"
+                                    Margin="0,0,0,25"/>
+
+
+                                <Button
+                                    x:Name="confirm_click"
+                                    Content="Criar registro"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Height="44"
+                                    Click="confirm_Click"/>
+
+                            </StackPanel>
+
+                        </Border>
+
+                    </StackPanel>
+
+                </ScrollViewer>
+
             </Grid>
 
-            <Grid Height="80
-                  ">
-                <Image Source="/help-removebg-preview.png" Stretch="Uniform" Width="24" Height="24"
-                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" IsHitTestVisible="False"/>
-                <Button x:Name="menu_button_edit" Content="Editar &#xD;&#xA;Casas" Width="78" Height="40"
-                        VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                        Click="edit_click" Margin="0,30,0,0" HorizontalAlignment="Center"/>
+
+            <!-- ============================================= -->
+            <!-- EDIT -->
+            <!-- ============================================= -->
+
+            <Grid
+                x:Name="edit_screen"
+                Visibility="Collapsed">
+
+                <StackPanel
+                    Width="700"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="50">
+
+                    <TextBlock
+                        x:Name="title_edit"
+                        Text="Edição de casas"
+                        FontSize="28"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock
+                        Text="Edite as informações das propriedades cadastradas."
+                        Foreground="#707070"
+                        Margin="0,5,0,30"/>
+
+                </StackPanel>
+
             </Grid>
-            <Grid Height="80">
-                <Image Source="/exit-removebg-preview.png" Stretch="Uniform" Width="24" Height="24"
-                       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" IsHitTestVisible="False"/>
-                <Button x:Name="menu_button_remove" Content="Remover &#xD;&#xA; Casas" Width="78" Height="40"
-                        VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                        Click="remove_click" Margin="0,30,0,0" HorizontalAlignment="Center"/>
+
+
+            <!-- ============================================= -->
+            <!-- LANDING PAGE -->
+            <!-- ============================================= -->
+
+            <Grid
+                x:Name="landing_page"
+                Visibility="Collapsed">
+
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Width="750"
+                    Margin="50">
+
+                    <TextBlock
+                        x:Name="title_landing_page"
+                        Text="Bem-vindo à Imobiliária Arfe"
+                        FontSize="30"
+                        FontWeight="SemiBold"
+                        HorizontalAlignment="Center"/>
+
+                    <TextBlock
+                        Text="Gerencie suas propriedades de forma simples."
+                        Foreground="#707070"
+                        FontSize="14"
+                        HorizontalAlignment="Center"
+                        Margin="0,7,0,30"/>
+
+
+                    <Border
+                        Background="White"
+                        CornerRadius="12"
+                        Padding="15"
+                        Effect="{StaticResource SoftShadow}">
+
+                        <DataGrid
+                            x:Name="landing_page_data"
+                            d:ItemsSource="{d:SampleData ItemCount=5}"
+                            AutoGenerateColumns="True"
+                            IsEnabled="False"
+                            BorderThickness="0"
+                            Background="White"
+                            RowHeight="42"/>
+
+                    </Border>
+
+
+                    <Button
+                        x:Name="menu_button_register_first_house"
+                        Content="＋  Registre sua primeira casa"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Width="230"
+                        Height="45"
+                        HorizontalAlignment="Center"
+                        Margin="0,25,0,0"
+                        Click="register_click"/>
+
+                </StackPanel>
+
             </Grid>
-            <Grid Height="60">
-                <Image Source="/exit-removebg-preview.png" Stretch="Uniform" Width="24" Height="24"
-                  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" IsHitTestVisible="False"/>
-                <Button x:Name="menu_button_exit" Content="Sair" Width="58" Height="30"
-            VerticalAlignment="Bottom" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-            Click="exit_click"/>
+
+
+            <!-- ============================================= -->
+            <!-- REMOVE -->
+            <!-- ============================================= -->
+
+            <Grid
+                x:Name="remove_screen"
+                Visibility="Visible">
+
+                <StackPanel
+                    Width="600"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="50">
+
+                    <TextBlock
+                        x:Name="title_remove"
+                        Text="Remoção de casas"
+                        FontSize="30"
+                        FontWeight="SemiBold"/>
+
+                    <TextBlock
+                        Foreground="#707070"
+                        Margin="0,5,0,30"><Run Text="Escolha uma ação"/><Run Language="pt-br" Text=" a seguir:"/></TextBlock>
+
+
+                    <Border x:Name="border"
+                        Background="White"
+                        CornerRadius="12"
+                        Padding="30"
+                        Effect="{Binding Cursor, ElementName=remove_screen}">
+
+                        <StackPanel>
+
+                            <Button
+                                x:Name="remove_all_button"
+                                Content="Remover todas as casas"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Height="45"
+                                Margin="0,0,0,15"
+                                Click="remove_all_button_Click"/>
+
+
+                            <Button
+                                x:Name="remove_specific_button"
+                                Content="Selecionar uma casa"
+                                Height="45"
+                                Background="#FF0067C0"
+                                BorderThickness="0"
+                                Click="remove_specific_button_Click" Width="540"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </StackPanel>
+
             </Grid>
 
-        </StackPanel>
 
-        <!-- COLUMN 1: WINDOWS -->
+            <!-- ============================================= -->
+            <!-- REMOVE SPECIFIC -->
+            <!-- ============================================= -->
 
-        <!-- REGISTER -->
-        <Grid x:Name="register_screen" Grid.Column="1" Visibility="Collapsed">
-            <Button x:Name="menu_register" Content="Menu" HorizontalAlignment="Left" Margin="0,10,0,0"
-                    VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                    Click="menu_button_click" Width="49"/>
-            <Label x:Name="title_register" Content="Registrar Casa" HorizontalAlignment="Center" Margin="0,50,0,0"
-                   VerticalAlignment="Top" Height="30" FontWeight="Bold" FontSize="14"/>
-            <TextBox x:Name="register_location" HorizontalAlignment="Center" Margin="0,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
-            <ComboBox x:Name="register_floor" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" AlternationCount="5" SelectedIndex="-1" SelectionChanged="ComboBox_SelectionChanged" Margin="0,153,0,0">
-                <ComboBoxItem Content="1 andar" />
-                <ComboBoxItem Content="2 andares" />
-                <ComboBoxItem Content="3 andares" />
-                <ComboBoxItem Content="4 andares" />
-                <ComboBoxItem Content="5 andares ou mais" />
-            </ComboBox>
-            <Label Content="Andares" HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="register_bedroom" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" AlternationCount="7" SelectedIndex="-1" SelectionChanged="ComboBox_SelectionChanged" Margin="0,201,0,0">
-                <ComboBoxItem Content="1" />
-                <ComboBoxItem Content="2" />
-                <ComboBoxItem Content="3" />
-                <ComboBoxItem Content="4" />
-                <ComboBoxItem Content="5" />
-                <ComboBoxItem Content="6" />
-                <ComboBoxItem Content="7 ou mais" />
-            </ComboBox>
-            <Label Content="Quantos Quartos" Margin="0,173,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="101"/>
-            <ComboBox x:Name="register_bathroom" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" AlternationCount="5" SelectedIndex="-1" SelectionChanged="ComboBox_SelectionChanged" Margin="0,253,0,0">
-                <ComboBoxItem Content="1" />
-                <ComboBoxItem Content="2" />
-                <ComboBoxItem Content="3" />
-                <ComboBoxItem Content="4" />
-                <ComboBoxItem Content="5 ou mais" />
-            </ComboBox>
-            <Label Content="Quantos Banheiros" HorizontalAlignment="Center" Margin="0,227,0,0" VerticalAlignment="Top"/>
-            <Label Content="Location" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.052,0.618"/>
-            <CheckBox x:Name="has_furniture" Content="Com mobília" HorizontalAlignment="Center" Margin="0,368,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.224,0.599" Checked="CheckBox_Checked"/>
-            <Slider x:Name="price_slide" HorizontalAlignment="Center" Margin="0,296,0,0" VerticalAlignment="Top" Width="120"
-                Minimum="100000"
-                Maximum="10000000"   
-                Value="3" 
-                TickFrequency="10000" 
-                TickPlacement="BottomRight" 
-                IsSnapToTickEnabled="True" ValueChanged="Slider_PriceChanged"/>
-            <Label x:Name="price_register" Content="Price:" HorizontalAlignment="Left" Margin="311,270,0,0" VerticalAlignment="Top"/>
-            <Slider x:Name="area_slide" HorizontalAlignment="Center" Margin="0,339,0,0" VerticalAlignment="Top" Width="120"
-                Minimum="10"
-                Maximum="1000"   
-                Value="10" 
-                TickFrequency="5" 
-                TickPlacement="BottomRight" 
-                IsSnapToTickEnabled="True" ValueChanged="Slider_AreaChanged"/>
-            <Label x:Name="area_register" Content="Area:" HorizontalAlignment="Left" Margin="311,313,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="confirm_click" Content="Criar Registro" HorizontalAlignment="Center" Margin="0,397,0,0" VerticalAlignment="Top" Click="confirm_Click"/>
-        </Grid>
+            <Grid
+                x:Name="remove_specific_screen"
+                Visibility="Collapsed">
 
-        <!-- EDIT -->
-        <Grid x:Name="edit_screen" Grid.Column="1" Visibility="Collapsed">
-            <Button x:Name="menu_edit" Content="Menu" HorizontalAlignment="Left" Margin="0,10,0,0"
-                    VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                    Click="menu_button_click" Width="49"/>
-            <Label x:Name="title_edit" Content="Edição de Casas" HorizontalAlignment="Center" Margin="0,50,0,0"
-                   VerticalAlignment="Top" Height="30" FontWeight="Bold" FontSize="14"/>
-        </Grid>
+                <StackPanel
+                    Width="600"
+                    HorizontalAlignment="Center"
+                    Margin="50">
 
-        <!-- LANDING PAGE -->
-        <Grid x:Name="landing_page" Grid.Column="1" Visibility="Collapsed">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="173*"/>
-                <RowDefinition Height="261*"/>
-            </Grid.RowDefinitions>
-            <DataGrid x:Name="landing_page_data" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="52,121,53,30" Grid.RowSpan="2" IsEnabled="False"/>
-            <Button x:Name="menu_button_register_first_house" Content="Registre sua primeira casa" Width="206" Height="40"
-                    VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                    Click="register_click" Margin="0,90,0,0" HorizontalAlignment="Center" Grid.Row="1"/>
-            <Button x:Name="menu_button_landing_page" Content="Menu" HorizontalAlignment="Left" Margin="0,10,0,0"
-                    VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-                    Click="menu_button_click" Width="49" Height="20"/>
-            <Label x:Name="title_landing_page" Content="Bem vindo a Imobiliária Arfe" HorizontalAlignment="Center" Margin="0,50,0,0"
-                    VerticalAlignment="Top" Height="30" FontWeight="Bold" FontSize="14"/>
-        </Grid>
+                    <TextBlock
+                        x:Name="title_remove_specific"
+                        Text="Selecionar casa"
+                        FontSize="30"
+                        FontWeight="SemiBold"/>
 
-        <!-- REMOVE -->
-        <Grid x:Name="remove_screen" Grid.Column="1" Visibility="Visible">
-            <Button x:Name="menu_remove" Content="Menu" HorizontalAlignment="Left" Margin="0,10,0,0"
-            VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-            Click="menu_button_click" Width="49"/>
-            <Label x:Name="title_remove" Content="Remoção de Casas" HorizontalAlignment="Center" Margin="0,50,0,0"
-           VerticalAlignment="Top" Height="30" FontWeight="Bold" FontSize="14"/>
-            <Button x:Name="remove_all_button" Content=" Remover todas as casas " HorizontalAlignment="Center" Margin="0,124,0,0" VerticalAlignment="Top" Height="42" Width="168" Click="remove_all_button_Click"/>
-            <Button x:Name="remove_specific_button" Content=" Selecionar Casa " HorizontalAlignment="Center" Margin="0,232,0,0" VerticalAlignment="Top" Height="42" Width="168" Click="remove_specific_button_Click"/>
-        </Grid>
-        <!-- REMOVE ESPECIFIC -->
-        <Grid x:Name="remove_specific_screen" Grid.Column="1" Visibility="Collapsed">
-            <Button x:Name="menu_remove_specific" Content="Menu" HorizontalAlignment="Left" Margin="0,10,0,0"
-            VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
-            Click="menu_button_click" Width="49"/>
-            <Label x:Name="title_remove_specific" Content="Selecione o ID da casa que quer remover:" HorizontalAlignment="Center" Margin="0,50,0,0"
-            VerticalAlignment="Top" Height="30" FontWeight="Bold" FontSize="14"/>
+                    <TextBlock
+                        Text="Selecione o ID da casa que deseja remover."
+                        Foreground="#707070"
+                        Margin="0,5,0,30"/>
+
+                </StackPanel>
+
+            </Grid>
+
         </Grid>
 
     </Grid>
+
 </Window>

@@ -1,266 +1,465 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
-using System.IO;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Desafio_CRUD
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        public static string connectionString =
+            "Server=localhost;Database=store;Uid=root;Pwd=;";
 
-        public static string connectionString = "Server=localhost;Database=store;Uid=root;Pwd=;";
         public static MySqlConnection Connection { get; set; }
-
-        bool menu_opened = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            setScreen();
+            SetScreen();
         }
 
-        private void setScreen()
+
+        // ==========================================================
+        // CONTROLE DAS TELAS
+        // ==========================================================
+
+        private void SetScreen()
         {
+            ShowScreen(landing_page);
             viewDataBase();
+        }
+
+
+        private void ShowScreen(Grid screen)
+        {
+            // Todas as telas ficam escondidas
             register_screen.Visibility = Visibility.Collapsed;
-            edit_screen.Visibility = Visibility.Collapsed;
-            remove_screen.Visibility = Visibility.Collapsed;
-            landing_page.Visibility = Visibility.Visible;
-            
-        }
-
-
-
-        // OPENING SIDE MENU
-        private void menu_button_click(object sender, RoutedEventArgs e)
-        {
-            GridLengthConverter converter = new GridLengthConverter();
-            GridLength width_close = (GridLength)converter.ConvertFromString("1");
-            GridLength width_open = (GridLength)converter.ConvertFromString("60");
-
-            if (menu_opened)
-            {
-                menu_column.Width = width_close;
-                menu_opened = false;
-            }
-            else
-            {
-                menu_column.Width = width_open;
-                menu_opened = true;
-            }
-        }
-
-        // LOAD DATABASE
-
-        public void viewDataBase()
-        {
-            bool hasHouses = GlobalFunctions.Verify_database();
-            if (hasHouses == true)
-            {
-                menu_button_register_first_house.Visibility = Visibility.Hidden;
-                try
-                {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
-                    {
-
-                        conn.Open();
-
-                        string sql = @"SELECT id,location, area,price,bedrooms,bathrooms,furnished, floors FROM houses";
-
-                        using MySqlCommand cmd =
-                            new MySqlCommand(sql, conn);
-
-                        using MySqlDataAdapter adapter =
-                            new MySqlDataAdapter(cmd);
-
-                        DataTable tabela = new DataTable();
-
-                        adapter.Fill(tabela);
-
-                        landing_page_data.ItemsSource =
-                            tabela.DefaultView;
-
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else
-            {
-                menu_button_register_first_house.Visibility = Visibility.Visible;
-            }
-        }
-
-        // EXIT BUTTON
-
-        private void exit_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        // ==========================
-        // OPEN LANDING SCREEN
-        // ==========================
-
-        private void start_click(object sender, RoutedEventArgs e)
-        {
-            viewDataBase();
-            register_screen.Visibility = Visibility.Collapsed;
-            edit_screen.Visibility = Visibility.Collapsed;
-            remove_screen.Visibility = Visibility.Collapsed;
-            landing_page.Visibility = Visibility.Visible;
-            remove_specific_screen.Visibility = Visibility.Collapsed;
-        }
-
-        // ==========================
-        //  REGISTER HOUSE
-        // ==========================
-
-        // OPEN HOUSE REGISTER SCREEN
-        private void register_click(object sender, RoutedEventArgs e)
-        {
-            register_screen.Visibility = Visibility.Visible;
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Collapsed;
             landing_page.Visibility = Visibility.Collapsed;
             remove_specific_screen.Visibility = Visibility.Collapsed;
+
+            // Mostra somente a tela escolhida
+            screen.Visibility = Visibility.Visible;
         }
 
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        // ==========================================================
+        // MENU LATERAL
+        // ==========================================================
+
+        private void menu_button_click(object sender, RoutedEventArgs e)
         {
-            string text = register_location.Text;
+            // No novo design Windows 11 o menu fica sempre aberto.
+            // Esse método continua existindo porque os botões
+            // "Menu" do XAML utilizam esse evento.
+
+            ShowScreen(landing_page);
+            viewDataBase();
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        // ==========================================================
+        // BANCO DE DADOS
+        // ==========================================================
+
+        public void viewDataBase()
         {
+            try
+            {
+                bool hasHouses = GlobalFunctions.Verify_database();
+
+                using (MySqlConnection conn =
+                       new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = @"
+                        SELECT
+                            id,
+                            location,
+                            area,
+                            price,
+                            bedrooms,
+                            bathrooms,
+                            furnished,
+                            floors
+                        FROM houses
+                        ORDER BY id DESC";
+
+                    using (MySqlCommand cmd =
+                           new MySqlCommand(sql, conn))
+                    {
+                        using (MySqlDataAdapter adapter =
+                               new MySqlDataAdapter(cmd))
+                        {
+                            DataTable tabela = new DataTable();
+
+                            adapter.Fill(tabela);
+
+                            landing_page_data.ItemsSource =
+                                tabela.DefaultView;
+                        }
+                    }
+                }
+
+                // Mostra o botão somente quando não existem casas
+                menu_button_register_first_house.Visibility =
+                    hasHouses
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Não foi possível carregar as casas.\n\n" +
+                    ex.Message,
+                    "Erro ao carregar dados",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
-        public void CheckBox_Checked(object sender, RoutedEventArgs e)
+
+        // ==========================================================
+        // SAIR
+        // ==========================================================
+
+        private void exit_click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show(
+                "Deseja realmente sair?",
+                "Sair",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
 
-        private void Slider_PriceChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+
+        // ==========================================================
+        // INÍCIO
+        // ==========================================================
+
+        private void start_click(object sender, RoutedEventArgs e)
+        {
+            viewDataBase();
+            ShowScreen(landing_page);
+        }
+
+
+        // ==========================================================
+        // REGISTRAR CASA
+        // ==========================================================
+
+        private void register_click(object sender, RoutedEventArgs e)
+        {
+            ShowScreen(register_screen);
+
+            // Valores iniciais
+            area_slide.Value = 10;
+            price_slide.Value = 100000;
+
+            register_location.Clear();
+
+            register_bathroom.SelectedIndex = -1;
+            register_bedroom.SelectedIndex = -1;
+            register_floor.SelectedIndex = -1;
+
+            has_furniture.IsChecked = false;
+        }
+
+
+        private void TextBox_TextChanged(
+            object sender,
+            TextChangedEventArgs e)
+        {
+            // Evento mantido para compatibilidade com o XAML.
+        }
+
+
+        private void ComboBox_SelectionChanged(
+            object sender,
+            SelectionChangedEventArgs e)
+        {
+            // Evento mantido para compatibilidade com o XAML.
+        }
+
+
+        private void CheckBox_Checked(
+            object sender,
+            RoutedEventArgs e)
+        {
+            // Evento mantido para compatibilidade com o XAML.
+        }
+
+
+        // ==========================================================
+        // SLIDER DE PREÇO
+        // ==========================================================
+
+        private void Slider_PriceChanged(
+            object sender,
+            RoutedPropertyChangedEventArgs<double> e)
         {
             if (price_register != null)
             {
                 double value = e.NewValue;
 
-                price_register.Content = $"Price: R${value:F0}";
+                price_register.Text =
+                    $"Preço: R$ {value:N0}";
             }
         }
-        private void Slider_AreaChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+
+
+        // ==========================================================
+        // SLIDER DE ÁREA
+        // ==========================================================
+
+        private void Slider_AreaChanged(
+            object sender,
+            RoutedPropertyChangedEventArgs<double> e)
         {
             if (area_register != null)
             {
                 double value = e.NewValue;
 
-                area_register.Content = $"Area: {value:F0}m²";
+                area_register.Text =
+                    $"Área: {value:N0} m²";
             }
         }
-        private void confirm_Click(object sender, RoutedEventArgs e)
+
+
+        // ==========================================================
+        // CRIAR REGISTRO
+        // ==========================================================
+
+        private void confirm_Click(
+            object sender,
+            RoutedEventArgs e)
         {
-            int error = 0;
-            if (register_location.Text == null)
+            // ------------------------------------------
+            // VALIDAÇÃO
+            // ------------------------------------------
+
+            if (string.IsNullOrWhiteSpace(register_location.Text))
             {
-                error += 1;
+                MessageBox.Show(
+                    "Digite a localização da casa.",
+                    "Campo obrigatório",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                register_location.Focus();
+                return;
             }
-            if (price_slide.Value < 100000)
-            {
-                error += 1;
-            }
-            if (area_slide.Value < 10)
-            {
-                error += 1;
-            }
-            if ( register_bathroom.SelectedIndex < 0)
-            {
-                error += 1;
-            }
-            if (register_bedroom.SelectedIndex < 0)
-            {
-                error += 1;
-            }
+
+
             if (register_floor.SelectedIndex < 0)
             {
-                error += 1;
+                MessageBox.Show(
+                    "Selecione a quantidade de andares.",
+                    "Campo obrigatório",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
             }
-            if (error <= 0)
+
+
+            if (register_bedroom.SelectedIndex < 0)
             {
-                bool hasFurniture = false;
-                if (has_furniture.IsChecked == true)
-                {
-                    hasFurniture |= true;
-                }
-                GlobalFunctions.SaveHouse(register_location.Text, Convert.ToInt32(area_slide.Value), price_slide.Value,hasFurniture, register_bedroom.SelectedIndex, register_bathroom.SelectedIndex, register_floor.SelectedIndex);
+                MessageBox.Show(
+                    "Selecione a quantidade de quartos.",
+                    "Campo obrigatório",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+
+            if (register_bathroom.SelectedIndex < 0)
+            {
+                MessageBox.Show(
+                    "Selecione a quantidade de banheiros.",
+                    "Campo obrigatório",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+
+            // ------------------------------------------
+            // VALORES
+            // ------------------------------------------
+
+            string location = register_location.Text.Trim();
+
+            int area =
+                Convert.ToInt32(area_slide.Value);
+
+            double price =
+                price_slide.Value;
+
+            bool hasFurniture =
+                has_furniture.IsChecked == true;
+
+
+            // IMPORTANTE:
+            // SelectedIndex começa em 0.
+            // Por isso adicionamos 1 para obter o valor real.
+
+            int bedrooms =
+                register_bedroom.SelectedIndex + 1;
+
+            int bathrooms =
+                register_bathroom.SelectedIndex + 1;
+
+            int floors =
+                register_floor.SelectedIndex + 1;
+
+
+            // ------------------------------------------
+            // SALVAR
+            // ------------------------------------------
+
+            try
+            {
+                GlobalFunctions.SaveHouse(
+                    location,
+                    area,
+                    price,
+                    hasFurniture,
+                    bedrooms,
+                    bathrooms,
+                    floors);
+
+
+                MessageBox.Show(
+                    "Casa cadastrada com sucesso!",
+                    "Cadastro realizado",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+
+                // --------------------------------------
+                // LIMPAR FORMULÁRIO
+                // --------------------------------------
+
                 area_slide.Value = 10;
                 price_slide.Value = 100000;
+
                 register_location.Clear();
+
                 register_bathroom.SelectedIndex = -1;
                 register_bedroom.SelectedIndex = -1;
                 register_floor.SelectedIndex = -1;
+
                 has_furniture.IsChecked = false;
 
+
+                // Atualiza a tabela
+                viewDataBase();
+
+
+                // Volta para a tela inicial
+                ShowScreen(landing_page);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Preencha todos os dados");
+                MessageBox.Show(
+                    "Não foi possível cadastrar a casa.\n\n" +
+                    ex.Message,
+                    "Erro",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
 
-        // ==========================
-        // OPEN HOUSE EDIT SCREEN
-        // ==========================
+
+        // ==========================================================
+        // EDITAR
+        // ==========================================================
 
         private void edit_click(object sender, RoutedEventArgs e)
         {
-            register_screen.Visibility = Visibility.Collapsed;
-            edit_screen.Visibility = Visibility.Visible;
-            remove_screen.Visibility = Visibility.Collapsed;
-            landing_page.Visibility = Visibility.Collapsed;
-            remove_specific_screen.Visibility = Visibility.Collapsed;
+            ShowScreen(edit_screen);
         }
 
-        // ==========================
-        // OPEN HOUSE REMOVE SCREEN
-        // ==========================
+
+        // ==========================================================
+        // REMOVER
+        // ==========================================================
 
         private void remove_click(object sender, RoutedEventArgs e)
         {
-            register_screen.Visibility = Visibility.Collapsed;
-            edit_screen.Visibility = Visibility.Collapsed;
-            remove_screen.Visibility = Visibility.Visible;
-            landing_page.Visibility = Visibility.Collapsed;
-            remove_specific_screen.Visibility = Visibility.Collapsed;
+            ShowScreen(remove_screen);
         }
 
-        private void remove_specific_button_Click(object sender, RoutedEventArgs e)
+
+        // ==========================================================
+        // REMOVER CASA ESPECÍFICA
+        // ==========================================================
+
+        private void remove_specific_button_Click(
+            object sender,
+            RoutedEventArgs e)
         {
-            register_screen.Visibility = Visibility.Collapsed;
-            edit_screen.Visibility = Visibility.Visible;
-            remove_screen.Visibility = Visibility.Collapsed;
-            landing_page.Visibility = Visibility.Collapsed;
-            remove_specific_screen.Visibility = Visibility.Visible;
+            ShowScreen(remove_specific_screen);
         }
 
-        private void remove_all_button_Click(object sender, RoutedEventArgs e)
+
+        // ==========================================================
+        // REMOVER TODAS
+        // ==========================================================
+
+        private void remove_all_button_Click(
+            object sender,
+            RoutedEventArgs e)
         {
-            GlobalFunctions.RemoveHouse();
+            MessageBoxResult result = MessageBox.Show(
+                "Tem certeza que deseja remover TODAS as casas?\n\n" +
+                "Essa ação não poderá ser desfeita.",
+                "Confirmar remoção",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+
+            try
+            {
+                GlobalFunctions.RemoveHouse();
+
+                MessageBox.Show(
+                    "Todas as casas foram removidas.",
+                    "Remoção concluída",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                viewDataBase();
+
+                ShowScreen(landing_page);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Erro ao remover as casas.\n\n" +
+                    ex.Message,
+                    "Erro",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
     }
 }
