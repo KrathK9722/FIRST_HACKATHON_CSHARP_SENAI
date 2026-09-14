@@ -79,5 +79,23 @@ namespace Desafio_CRUD
                 MessageBox.Show("Erro no banco");
             }
         }
+        public static void RemoveHouse()
+        {
+            Open_database();
+            string query = "TRUNCATE TABLE houses";
+            try
+            {
+                using (MySqlCommand command = new MySqlCommand(query, Connection))
+                {
+
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Casas deletadas");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Erro no banco");
+            }
+        }
     }
 }

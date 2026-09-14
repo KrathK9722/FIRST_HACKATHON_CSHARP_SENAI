@@ -125,7 +125,7 @@
         </Grid>
 
         <!-- LANDING PAGE -->
-        <Grid x:Name="landing_page" Grid.Column="1" Visibility="Visible">
+        <Grid x:Name="landing_page" Grid.Column="1" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="173*"/>
                 <RowDefinition Height="261*"/>
@@ -142,12 +142,22 @@
         </Grid>
 
         <!-- REMOVE -->
-        <Grid x:Name="remove_screen" Grid.Column="1" Visibility="Collapsed">
+        <Grid x:Name="remove_screen" Grid.Column="1" Visibility="Visible">
             <Button x:Name="menu_remove" Content="Menu" HorizontalAlignment="Left" Margin="0,10,0,0"
             VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
             Click="menu_button_click" Width="49"/>
             <Label x:Name="title_remove" Content="Remoção de Casas" HorizontalAlignment="Center" Margin="0,50,0,0"
            VerticalAlignment="Top" Height="30" FontWeight="Bold" FontSize="14"/>
+            <Button x:Name="remove_all_button" Content=" Remover todas as casas " HorizontalAlignment="Center" Margin="0,124,0,0" VerticalAlignment="Top" Height="42" Width="168" Click="remove_all_button_Click"/>
+            <Button x:Name="remove_specific_button" Content=" Selecionar Casa " HorizontalAlignment="Center" Margin="0,232,0,0" VerticalAlignment="Top" Height="42" Width="168" Click="remove_specific_button_Click"/>
+        </Grid>
+        <!-- REMOVE ESPECIFIC -->
+        <Grid x:Name="remove_specific_screen" Grid.Column="1" Visibility="Collapsed">
+            <Button x:Name="menu_remove_specific" Content="Menu" HorizontalAlignment="Left" Margin="0,10,0,0"
+            VerticalAlignment="Top" Background="#FFC5C5C5" BorderBrush="#FFC5C5C5"
+            Click="menu_button_click" Width="49"/>
+            <Label x:Name="title_remove_specific" Content="Selecione o ID da casa que quer remover:" HorizontalAlignment="Center" Margin="0,50,0,0"
+            VerticalAlignment="Top" Height="30" FontWeight="Bold" FontSize="14"/>
         </Grid>
 
     </Grid>

@@ -113,7 +113,10 @@ namespace Desafio_CRUD
             this.Close();
         }
 
+        // ==========================
         // OPEN LANDING SCREEN
+        // ==========================
+
         private void start_click(object sender, RoutedEventArgs e)
         {
             viewDataBase();
@@ -121,6 +124,7 @@ namespace Desafio_CRUD
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Collapsed;
             landing_page.Visibility = Visibility.Visible;
+            remove_specific_screen.Visibility = Visibility.Collapsed;
         }
 
         // ==========================
@@ -134,6 +138,7 @@ namespace Desafio_CRUD
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Collapsed;
             landing_page.Visibility = Visibility.Collapsed;
+            remove_specific_screen.Visibility = Visibility.Collapsed;
         }
 
 
@@ -218,22 +223,44 @@ namespace Desafio_CRUD
             }
         }
 
+        // ==========================
         // OPEN HOUSE EDIT SCREEN
+        // ==========================
+
         private void edit_click(object sender, RoutedEventArgs e)
         {
             register_screen.Visibility = Visibility.Collapsed;
             edit_screen.Visibility = Visibility.Visible;
             remove_screen.Visibility = Visibility.Collapsed;
             landing_page.Visibility = Visibility.Collapsed;
+            remove_specific_screen.Visibility = Visibility.Collapsed;
         }
 
+        // ==========================
         // OPEN HOUSE REMOVE SCREEN
+        // ==========================
+
         private void remove_click(object sender, RoutedEventArgs e)
         {
             register_screen.Visibility = Visibility.Collapsed;
             edit_screen.Visibility = Visibility.Collapsed;
             remove_screen.Visibility = Visibility.Visible;
             landing_page.Visibility = Visibility.Collapsed;
+            remove_specific_screen.Visibility = Visibility.Collapsed;
+        }
+
+        private void remove_specific_button_Click(object sender, RoutedEventArgs e)
+        {
+            register_screen.Visibility = Visibility.Collapsed;
+            edit_screen.Visibility = Visibility.Visible;
+            remove_screen.Visibility = Visibility.Collapsed;
+            landing_page.Visibility = Visibility.Collapsed;
+            remove_specific_screen.Visibility = Visibility.Visible;
+        }
+
+        private void remove_all_button_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalFunctions.RemoveHouse();
         }
     }
 }
