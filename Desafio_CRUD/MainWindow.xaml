@@ -469,7 +469,7 @@
 
             <Grid
                 x:Name="register_screen"
-                Visibility="Collapsed">
+                Visibility="Visible">
 
                 <ScrollViewer
                     VerticalScrollBarVisibility="Auto">
@@ -508,23 +508,19 @@
                                     Text="Localização"
                                     FontWeight="SemiBold"
                                     Margin="0,0,0,7"/>
-
                                 <TextBox
                                     x:Name="register_location"
                                     TextChanged="TextBox_TextChanged"
-                                    Margin="0,0,0,18"/>
-
-
+                                    />
                                 <TextBlock
                                     Text="Andares"
                                     FontWeight="SemiBold"
-                                    Margin="0,0,0,7"/>
-
+                                    />
                                 <ComboBox
                                     x:Name="register_floor"
                                     SelectedIndex="-1"
                                     SelectionChanged="ComboBox_SelectionChanged"
-                                    Margin="0,0,0,18">
+                                    >
 
                                     <ComboBoxItem Content="1 andar"/>
                                     <ComboBoxItem Content="2 andares"/>
@@ -539,12 +535,11 @@
                                     Text="Quantidade de quartos"
                                     FontWeight="SemiBold"
                                     Margin="0,0,0,7"/>
-
                                 <ComboBox
                                     x:Name="register_bedroom"
                                     SelectedIndex="-1"
                                     SelectionChanged="ComboBox_SelectionChanged"
-                                    Margin="0,0,0,18">
+                                    >
 
                                     <ComboBoxItem Content="1"/>
                                     <ComboBoxItem Content="2"/>
@@ -561,12 +556,11 @@
                                     Text="Quantidade de banheiros"
                                     FontWeight="SemiBold"
                                     Margin="0,0,0,7"/>
-
                                 <ComboBox
                                     x:Name="register_bathroom"
                                     SelectedIndex="-1"
                                     SelectionChanged="ComboBox_SelectionChanged"
-                                    Margin="0,0,0,22">
+                                    >
 
                                     <ComboBoxItem Content="1"/>
                                     <ComboBoxItem Content="2"/>
@@ -575,15 +569,13 @@
                                     <ComboBoxItem Content="5 ou mais"/>
 
                                 </ComboBox>
-
-
-                                <!-- PREÇO -->
-
                                 <TextBlock
                                     x:Name="price_register"
                                     Text="Preço"
                                     FontWeight="SemiBold"/>
 
+
+                                <!-- PREÇO -->
                                 <Slider
                                     x:Name="price_slide"
                                     Minimum="100000"
@@ -593,16 +585,14 @@
                                     TickPlacement="BottomRight"
                                     IsSnapToTickEnabled="True"
                                     ValueChanged="Slider_PriceChanged"
-                                    Margin="0,5,0,18"/>
-
-
-                                <!-- ÁREA -->
-
+                                    />
                                 <TextBlock
                                     x:Name="area_register"
                                     Text="Área"
                                     FontWeight="SemiBold"/>
 
+
+                                <!-- ÁREA -->
                                 <Slider
                                     x:Name="area_slide"
                                     Minimum="10"
@@ -612,14 +602,13 @@
                                     TickPlacement="BottomRight"
                                     IsSnapToTickEnabled="True"
                                     ValueChanged="Slider_AreaChanged"
-                                    Margin="0,5,0,18"/>
-
-
+                                    
+                                    />
                                 <CheckBox
                                     x:Name="has_furniture"
                                     Content="Com mobília"
-                                    Checked="CheckBox_Checked"
-                                    Margin="0,0,0,25"/>
+                                    Checked="CheckBox_Checked" Foreground="Black"
+                                    />
 
 
                                 <Button
@@ -676,7 +665,7 @@
 
             <Grid
                 x:Name="landing_page"
-                Visibility="Visible">
+                Visibility="Collapsed">
 
                 <StackPanel
                     HorizontalAlignment="Center"
@@ -719,7 +708,7 @@
 
                     <Button
                         x:Name="menu_button_register_first_house"
-                        Content="＋  Registre sua primeira casa"
+                        Content="➕ Registre sua primeira casa"
                         Style="{StaticResource PrimaryButtonStyle}"
                         Width="230"
                         Height="45"
