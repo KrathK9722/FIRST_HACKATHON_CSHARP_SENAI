@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Mysqlx.Expr;
 using System;
 using System.Data;
 using System.Windows;
@@ -460,6 +461,16 @@ namespace Desafio_CRUD
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
+        }
+
+        private void switch_click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ToggleSwitch_Checked(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

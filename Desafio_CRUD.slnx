@@ -1,4 +1,6 @@
 <Solution>
-  <Folder Name="/Itens de Solução/" />
+  <Folder Name="/Itens de Solução/">
+    <File Path="DEV_NOTES.md" />
+  </Folder>
   <Project Path="Desafio_CRUD/Desafio_CRUD.csproj" />
 </Solution>

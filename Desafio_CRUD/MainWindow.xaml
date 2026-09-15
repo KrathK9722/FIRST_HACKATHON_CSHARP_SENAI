@@ -230,7 +230,7 @@
 
         <Border
             Grid.Column="0"
-            Background="{StaticResource SidebarBackground}"
+            Background="#F2F2F2"
             BorderBrush="{StaticResource BorderColor}"
             BorderThickness="0,0,1,0">
 
@@ -395,8 +395,29 @@
                     </Button>
 
 
-                </StackPanel>
+                    <!-- SWITCH THEME -->
 
+                    <Button
+                        x:Name="menu_button_switch"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="switch_click">
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock
+                                FontSize="19"
+                                Width="35"
+                                VerticalAlignment="Center"><Run Language="pt-br" Text="🌓"/></TextBlock>
+                            <ui:ToggleSwitch Content="Dark Mode" Checked="ToggleSwitch_Checked" Foreground="Black" Height="58" Width="140" >
+                                <ui:ToggleSwitch.Background>
+                                    <SolidColorBrush Color="#FF5D5D5D"/>
+                                </ui:ToggleSwitch.Background>
+                            </ui:ToggleSwitch>
+
+                        </StackPanel>
+
+                    </Button>
+
+                </StackPanel>
 
                 <!-- SAIR -->
 
@@ -437,9 +458,9 @@
         <!-- CONTEÚDO -->
         <!-- ================================================= -->
 
-        <Grid
+        <Grid x:Name="main_grid"
             Grid.Column="1"
-            Background="{StaticResource WindowBackground}">
+            Background="#F7F7F7">
 
 
             <!-- ============================================= -->
@@ -655,7 +676,7 @@
 
             <Grid
                 x:Name="landing_page"
-                Visibility="Collapsed">
+                Visibility="Visible">
 
                 <StackPanel
                     HorizontalAlignment="Center"
@@ -691,7 +712,7 @@
                             IsEnabled="False"
                             BorderThickness="0"
                             Background="White"
-                            RowHeight="42"/>
+                            RowHeight="42" Height="111"/>
 
                     </Border>
 
@@ -707,6 +728,9 @@
                         Click="register_click"/>
 
                 </StackPanel>
+                <StackPanel Margin="364,443,364,126">
+                    <ui:TextBlock Foreground="Black" Text="CARDS" Height="22" Width="38" RenderTransformOrigin="0.513,0.547"/>
+                </StackPanel>
 
             </Grid>
 
@@ -717,7 +741,7 @@
 
             <Grid
                 x:Name="remove_screen"
-                Visibility="Visible">
+                Visibility="Collapsed">
 
                 <StackPanel
                     Width="600"
