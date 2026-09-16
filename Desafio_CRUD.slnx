@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Itens de Solução/">
-    <File Path="DEV_NOTES.md" />
+    <File Path="ARTHUR_DEV_NOTES.md" />
+    <File Path="FERNANDO_DEV_NOTES.md" />
   </Folder>
   <Project Path="Desafio_CRUD/Desafio_CRUD.csproj" />
 </Solution>
