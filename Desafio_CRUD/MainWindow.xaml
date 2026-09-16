@@ -469,7 +469,7 @@
 
             <Grid
                 x:Name="register_screen"
-                Visibility="Visible">
+                Visibility="Collapsed">
 
                 <ScrollViewer
                     VerticalScrollBarVisibility="Auto">
@@ -635,7 +635,7 @@
 
             <Grid
                 x:Name="edit_screen"
-                Visibility="Collapsed">
+                Visibility="Visible">
 
                 <StackPanel
                     Width="700"
@@ -645,14 +645,12 @@
 
                     <TextBlock
                         x:Name="title_edit"
-                        Text="Edição de casas"
                         FontSize="28"
-                        FontWeight="SemiBold"/>
+                        FontWeight="SemiBold"><Run Language="pt-br" Text=" "/><Run Text="Edição de casas"/></TextBlock>
 
                     <TextBlock
-                        Text="Edite as informações das propriedades cadastradas."
                         Foreground="#707070"
-                        Margin="0,5,0,30"/>
+                        Margin="0,5,0,30"><Run Text="  "/><Run Language="pt-br" Text=" "/><Run Text="Edite as informações das propriedades cadastradas."/></TextBlock>
 
                 </StackPanel>
 
