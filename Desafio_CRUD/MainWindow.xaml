@@ -646,7 +646,7 @@
                     <TextBlock
                         x:Name="title_edit"
                         FontSize="28"
-                        FontWeight="SemiBold"><Run Language="pt-br" Text=" "/><Run Text="Edição de cachorros au au"/></TextBlock>
+                        FontWeight="SemiBold"><Run Text=" "/><Run Text="Edição de cachorros au au"/><Run Language="pt-br" Text=" mudança teste"/></TextBlock>
 
                     <TextBlock
                         Foreground="#707070"
