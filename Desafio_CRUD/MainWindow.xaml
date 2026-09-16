@@ -646,11 +646,11 @@
                     <TextBlock
                         x:Name="title_edit"
                         FontSize="28"
-                        FontWeight="SemiBold"><Run Language="pt-br" Text=" "/><Run Text="Edição de cachorros au au"/></TextBlock>
+                        FontWeight="SemiBold"><Run Text=" "/><Run Text="Edição de "/><Run Text="Casa"/><Run Language="pt-br" Text="s"/></TextBlock>
 
                     <TextBlock
                         Foreground="#707070"
-                        Margin="0,5,0,30"><Run Text="  "/><Run Language="pt-br" Text=" "/><Run Text="MUDANÇA TESTE Edite as informações das propriedades cadastradas."/></TextBlock>
+                        Margin="0,5,0,30"><Run Text="  "/><Run Language="pt-br" Text=" "/><Run Text="Edite as informações das propriedades cadastradas."/></TextBlock>
 
                 </StackPanel>
 
