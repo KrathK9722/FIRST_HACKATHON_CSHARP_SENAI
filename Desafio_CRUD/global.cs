@@ -18,7 +18,7 @@ namespace Desafio_CRUD
     /// </summary>
     public static class GlobalFunctions 
     {
-        public static string connectionString = "Server=localhost;Database=store;Uid=root;Pwd=;";
+        public static string connectionString = "Server=10.1.20.242;Database=arfe;Uid=arthur.kochan;Pwd=ArtH@8153;";
 
         // Conexão fica guardada aberta na memória do app
         public static MySqlConnection Connection { get; set; }

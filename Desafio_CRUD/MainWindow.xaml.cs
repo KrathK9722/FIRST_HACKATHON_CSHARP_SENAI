@@ -9,8 +9,7 @@ namespace Desafio_CRUD
 {
     public partial class MainWindow : Window
     {
-        public static string connectionString =
-            "Server=localhost;Database=store;Uid=root;Pwd=;";
+        public static string connectionString =  "Server=10.1.20.242;Database=arfe;Uid=arthur.kochan;Pwd=ArtH@8153;";
 
         public static MySqlConnection Connection { get; set; }
 
