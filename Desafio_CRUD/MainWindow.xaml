@@ -472,8 +472,7 @@
                 Visibility="Collapsed">
 
                 <ScrollViewer
-                    VerticalScrollBarVisibility="Auto">
-
+                    HorizontalScrollBarVisibility="Auto">
                     <StackPanel
                         Width="500"
                         HorizontalAlignment="Center"
@@ -635,24 +634,41 @@
 
             <Grid
                 x:Name="edit_screen"
-                Visibility="Visible">
+                Visibility="Collapsed">
 
-                <StackPanel
-                    Width="700"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    Margin="50">
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto">
 
-                    <TextBlock
-                        x:Name="title_edit"
-                        FontSize="28"
-                        FontWeight="SemiBold"><Run Text=" "/><Run Text="Edição de "/><Run Text="Casa"/><Run Language="pt-br" Text="s"/></TextBlock>
+                    <StackPanel
+                        Width="500"
+                        HorizontalAlignment="Center"
+                        Margin="40">
 
-                    <TextBlock
-                        Foreground="#707070"
-                        Margin="0,5,0,30"><Run Text="  "/><Run Language="pt-br" Text=" "/><Run Text="Edite as informações das propriedades cadastradas."/></TextBlock>
+                        <TextBlock
+                            FontSize="28"
+                            FontWeight="SemiBold"
+                            Foreground="#1A1A1A"
+                            Margin="0,10,0,5"><Run Language="pt-br" Text="Editar"/><Run Text=" casa"/><Run Language="pt-br" Text="s"/></TextBlock>
 
-                </StackPanel>
+                        <TextBlock
+                            FontSize="14"
+                            Foreground="#707070"
+                            Margin="0,0,0,30"><Run Language="pt-br" Text="Edite os anúncios"/><Run Text=" no sistema."/></TextBlock>
+
+
+                        <!-- CARD -->
+
+                        <Border
+                            Background="White"
+                            CornerRadius="12"
+                            Padding="30"
+                            Effect="{StaticResource SoftShadow}">
+
+                        </Border>
+
+                    </StackPanel>
+
+                </ScrollViewer>
 
             </Grid>
 
@@ -663,7 +679,7 @@
 
             <Grid
                 x:Name="landing_page"
-                Visibility="Collapsed">
+                Visibility="Visible">
 
                 <StackPanel
                     HorizontalAlignment="Center"
@@ -699,7 +715,7 @@
                             IsEnabled="False"
                             BorderThickness="0"
                             Background="White"
-                            RowHeight="42" Height="111"/>
+                            RowHeight="42" Height="111" Foreground="Black" SelectionChanged="landing_page_data_SelectionChanged"/>
 
                     </Border>
 

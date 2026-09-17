@@ -471,5 +471,10 @@ namespace Desafio_CRUD
         {
             
         }
+
+        private void landing_page_data_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
