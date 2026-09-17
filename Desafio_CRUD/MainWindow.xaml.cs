@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using Mysqlx.Expr;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +28,7 @@ namespace Desafio_CRUD
         private void SetScreen()
         {
             ShowScreen(landing_page);
-            viewDataBase();
+            viewCard();
         }
 
 
@@ -56,68 +57,28 @@ namespace Desafio_CRUD
             // "Menu" do XAML utilizam esse evento.
 
             ShowScreen(landing_page);
-            viewDataBase();
+            viewCard();
         }
 
 
         // ==========================================================
-        // BANCO DE DADOS
+        // CARDS DE CASA
         // ==========================================================
 
-        public void viewDataBase()
+        public void viewCard()
+
         {
-            try
+            for (int i = 0; i < 2; i++)
             {
-                bool hasHouses = GlobalFunctions.Verify_database();
+                CardVision novoCard = new CardVision();
 
-                using (MySqlConnection conn =
-                       new MySqlConnection(connectionString))
-                {
-                    conn.Open();
+                novoCard.CardTitle = $"Preço: valor#{i}";
+                novoCard.CardDescription = $"Localização: Local#{i}";
+                novoCard.CardImageSource = "C:\\Users\\arthur_kochan\\Documents\\Desafio_CRUD\\Desafio_CRUD\\help-removebg-preview.png";
+                novoCard.Width = 140;
+                novoCard.Margin = new Thickness(3);
 
-                    string sql = @"
-                        SELECT
-                            id,
-                            location,
-                            area,
-                            price,
-                            bedrooms,
-                            bathrooms,
-                            furnished,
-                            floors
-                        FROM houses
-                        ORDER BY id DESC";
-
-                    using (MySqlCommand cmd =
-                           new MySqlCommand(sql, conn))
-                    {
-                        using (MySqlDataAdapter adapter =
-                               new MySqlDataAdapter(cmd))
-                        {
-                            DataTable tabela = new DataTable();
-
-                            adapter.Fill(tabela);
-
-                            landing_page_data.ItemsSource =
-                                tabela.DefaultView;
-                        }
-                    }
-                }
-
-                // Mostra o botão somente quando não existem casas
-                menu_button_register_first_house.Visibility =
-                    hasHouses
-                        ? Visibility.Collapsed
-                        : Visibility.Visible;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "Não foi possível carregar as casas.\n\n" +
-                    ex.Message,
-                    "Erro ao carregar dados",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                ContainerDeCards.Children.Add(novoCard);
             }
         }
 
@@ -147,7 +108,7 @@ namespace Desafio_CRUD
 
         private void start_click(object sender, RoutedEventArgs e)
         {
-            viewDataBase();
+            viewCard();
             ShowScreen(landing_page);
         }
 
@@ -365,7 +326,7 @@ namespace Desafio_CRUD
 
 
                 // Atualiza a tabela
-                viewDataBase();
+                viewCard();
 
 
                 // Volta para a tela inicial
@@ -447,7 +408,7 @@ namespace Desafio_CRUD
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);
 
-                viewDataBase();
+                viewCard();
 
                 ShowScreen(landing_page);
             }

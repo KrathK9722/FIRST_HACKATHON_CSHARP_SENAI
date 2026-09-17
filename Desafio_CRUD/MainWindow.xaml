@@ -707,16 +707,10 @@
                         CornerRadius="12"
                         Padding="15"
                         Effect="{StaticResource SoftShadow}">
-
-                        <DataGrid
-                            x:Name="landing_page_data"
-                            d:ItemsSource="{d:SampleData ItemCount=5}"
-                            AutoGenerateColumns="True"
-                            IsEnabled="False"
-                            BorderThickness="0"
-                            Background="White"
-                            RowHeight="42" Height="111" Foreground="Black" SelectionChanged="landing_page_data_SelectionChanged"/>
-
+                        <ScrollViewer 
+                            VerticalScrollBarVisibility="Auto">
+                            <WrapPanel x:Name="ContainerDeCards" Margin="10" />
+                        </ScrollViewer>
                     </Border>
 
 
@@ -731,9 +725,7 @@
                         Click="register_click"/>
 
                 </StackPanel>
-                <StackPanel Margin="364,443,364,126">
-                    <ui:TextBlock Foreground="Black" Text="CARDS" Height="22" Width="38" RenderTransformOrigin="0.513,0.547"/>
-                </StackPanel>
+                <StackPanel Margin="364,443,364,126"/>
 
             </Grid>
 
