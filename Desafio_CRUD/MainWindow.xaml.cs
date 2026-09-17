@@ -68,13 +68,14 @@ namespace Desafio_CRUD
         public void viewCard()
 
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 6; i++)
             {
                 CardVision novoCard = new CardVision();
 
                 novoCard.CardTitle = $"Preço: valor#{i}";
                 novoCard.CardDescription = $"Localização: Local#{i}";
                 novoCard.CardImageSource = "C:\\Users\\arthur_kochan\\Documents\\Desafio_CRUD\\Desafio_CRUD\\help-removebg-preview.png";
+                novoCard.CardArea = $"Area: #{i}m²";
                 novoCard.Width = 140;
                 novoCard.Margin = new Thickness(3);
 

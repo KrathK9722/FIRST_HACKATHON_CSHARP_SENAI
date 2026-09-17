@@ -708,7 +708,7 @@
                         Padding="15"
                         Effect="{StaticResource SoftShadow}">
                         <ScrollViewer 
-                            VerticalScrollBarVisibility="Auto">
+                            HorizontalScrollBarVisibility="Auto">
                             <WrapPanel x:Name="ContainerDeCards" Margin="10" />
                         </ScrollViewer>
                     </Border>

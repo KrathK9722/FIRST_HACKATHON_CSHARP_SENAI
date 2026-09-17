@@ -51,20 +51,19 @@ namespace Desafio_CRUD
         {
             InitializeComponent();
         }
+
+        public static readonly DependencyProperty CardAreaProperty =
+            DependencyProperty.Register(
+                nameof(CardArea),
+                typeof(string),
+                typeof(CardVision),
+                new PropertyMetadata("Area padrão do card."));
+
         public string CardArea
         {
             get => (string)GetValue(CardAreaProperty);
             set => SetValue(CardAreaProperty, value);
         }
-
-        // 3. Registro da propriedade da Imagem
-        public static readonly DependencyProperty CardAreaSourceProperty =
-            DependencyProperty.Register(
-                nameof(CardAreaSource),
-                typeof(string),
-                typeof(CardVision),
-                new PropertyMetadata("https://via.placeholder.com/150"));
-
         private void Card_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show($"Card '{CardTitle}' foi clicado!");
